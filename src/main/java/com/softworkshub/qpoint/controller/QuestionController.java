@@ -26,8 +26,8 @@ import java.util.Random;
 import java.util.UUID;
 import java.util.random.RandomGenerator;
 
-@Controller
-//@RequestMapping("/q")
+@RestController
+@RequestMapping("/q")
 public class QuestionController {
 
     private static final Logger log = LoggerFactory.getLogger(QuestionController.class);
@@ -100,14 +100,34 @@ public class QuestionController {
     public String getQuestionSubjectAndYear(
             Model model,
             @RequestParam String subject,
-            @RequestParam Integer year) {
-        log.info("getQuestionSubjectAndYear { }", subject, year);
-        List<Question> question = questionService.getQuestion(subject, year);
+            @RequestParam Integer year,
+            @RequestParam(value = "pageSize",defaultValue = "10", required = false) int pageSize,
+            @RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo
+    ) {
+        log.info("getQuestionSubjectAndYear - subject: {}, year: {}", subject, year);
+        long totalCount = questionService.countBySubjectAndYear(subject, year);
+        int totalPage = (int) Math.ceil((double) totalCount/pageSize);
+        model.addAttribute("totalPages", (int) Math.ceil((double) totalCount / pageSize));
+        model.addAttribute("pageNo", pageNo);
+        List<Question> question = questionService.getQuestion(subject, year,pageSize,pageNo);
         model.addAttribute("questions", question);
         model.addAttribute("subject", subject);
         model.addAttribute("year", year);
+        model.addAttribute("totalPage", totalPage);
         return "question";
     }
 
+
+    //Test Purpose
+//    @GetMapping("/questions/json")
+//    public ResponseEntity<List<Question>> getQuestionJson(
+//            @RequestParam String subject,
+//            @RequestParam Integer year,
+//            @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
+//            @RequestParam(value = "pageNo", defaultValue = "0") int pageNo
+//    ) {
+//        List<Question> question = questionService.getQuestion(subject, year, pageSize, pageNo);
+//        return ResponseEntity.ok(question);
+//    }
 
 }

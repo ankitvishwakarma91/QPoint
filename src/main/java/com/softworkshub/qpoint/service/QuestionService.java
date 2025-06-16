@@ -7,9 +7,13 @@ import java.util.List;
 
 public interface QuestionService {
 
-    public List<Question> getQuestion(String subject, Integer year);
+    public List<Question> getQuestion(String subject, Integer year,int pageSize,int pageNo);
 
     public void addQuestion(Question question);
 
     public void addAllQuestions(List<Question> questionWrapper);
+
+    public long countBySubjectAndYear(String subject, Integer year);
+
+
 }

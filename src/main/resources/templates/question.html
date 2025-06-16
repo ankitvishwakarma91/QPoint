@@ -45,6 +45,29 @@
                 </div>
             </div>
         </div>
+
+<!--        Pagination Block -->
+        <div class="text-center mt-4">
+            <div class="btn-group" role="group" aria-label="Pagination">
+
+                <!-- Previous Button -->
+                <a class="btn btn-outline-secondary"
+                   th:href="@{/q/questions(subject=${subject}, year=${year}, pageNo=${pageNo - 1}, pageSize=10)}"
+                   th:classappend="${pageNo == 0} ? ' disabled'">
+                    &laquo; Previous
+                </a>
+
+                <!-- Next Button -->
+                <a class="btn btn-outline-secondary"
+                   th:href="@{/q/questions(subject=${subject}, year=${year}, pageNo=${pageNo + 1}, pageSize=10)}"
+                   th:classappend="${pageNo + 1 >= totalPages} ? ' disabled'">
+                    Next &raquo;
+                </a>
+            </div>
+            <p class="mt-2 text-muted">
+                Page <span th:text="${pageNo + 1}"></span> of <span th:text="${totalPages}"></span>
+            </p>
+        </div>
     </div>
 
     <div class="text-center mt-5">
