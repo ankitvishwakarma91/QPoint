@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Profile - QPoint</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/style.css}">
+    <style>
+        body {
+            background-color: #f4f6f9;
+        }
+    </style>
+</head>
+<body>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="profile-card text-center">
+<!--                <h3 class="text-primary mb-3"> Welcome, <span th:text="${user.username}">User</span></h3>-->
+                <h3 th:text="' 👤 Welcome, ' + ${user.username}">Welcome</h3>
+                <p class="text-muted mb-4">📧 Email: <span th:text="${user.email}">user@example.com</span></p>
+
+                <div class="d-grid gap-3">
+                    <form th:action="@{/logout}" method="post">
+                        <button type="submit" class="btn btn-outline-danger">🚪 Sign Out</button>
+                    </form>
+
+                    <!-- Only show this button if user is ADMIN -->
+                    <div sec:authorize="hasRole('ADMIN')">
+                        <a th:href="@{/admin/get-feedback-ui}" class="btn btn-success">📝 View Feedbacks</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

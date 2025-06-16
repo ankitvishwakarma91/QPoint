@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>QPoint - Feedback Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+<div class="container py-5">
+    <div class="col-md-8 mx-auto">
+        <div class="card shadow border-0">
+            <div class="card-body">
+                <!-- ✅ Session Success Message -->
+                <div th:if="${session.success}" class="alert alert-success fw-semibold text-center">
+                    <p th:text="${session.success}"></p>
+                    <th:block th:text="${@errorSession.removeSession()}"></th:block>
+                </div>
+
+                <!-- ✅ Session Error Message -->
+<!--                <div th:if="${session.error}" class="alert alert-danger fw-semibold text-center">-->
+<!--                    <p th:text="${session.error}"></p>-->
+<!--                    <th:block th:text="${@errorSession.removeSession()}"></th:block>-->
+<!--                </div>-->
+
+                <h3 class="text-center text-primary mb-4">📢 Send Us Your Feedback</h3>
+
+                <form th:action="@{/submit-feedback}" method="post" th:object="${feedBack}">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">👤 Full Name</label>
+                        <input type="text" class="form-control" id="name" th:field="*{name}" placeholder="Your Name">
+                        <div class="text-danger small" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email" class="form-label">📧 Email address</label>
+                        <input type="email" class="form-control" id="email" th:field="*{email}" placeholder="you@example.com">
+                        <div class="text-danger small" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="subject" class="form-label">📝 Subject</label>
+                        <input type="text" class="form-control" id="subject" th:field="*{subject}" placeholder="Subject">
+                        <div class="text-danger small" th:if="${#fields.hasErrors('subject')}" th:errors="*{subject}"></div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="message" class="form-label">💬 Message</label>
+                        <textarea class="form-control" id="message" rows="4" th:field="*{message}" placeholder="Your feedback..."></textarea>
+                        <div class="text-danger small" th:if="${#fields.hasErrors('message')}" th:errors="*{message}"></div>
+                    </div>
+
+                    <button type="submit" class="btn btn-success w-100 fw-semibold">🚀 Submit Feedback</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

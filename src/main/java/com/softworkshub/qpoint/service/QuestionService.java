@@ -1,5 +1,6 @@
 package com.softworkshub.qpoint.service;
 
+import com.softworkshub.qpoint.model.FeedBack;
 import com.softworkshub.qpoint.model.Question;
 import com.softworkshub.qpoint.model.QuestionWrapper;
 
@@ -15,5 +16,9 @@ public interface QuestionService {
 
     public long countBySubjectAndYear(String subject, Integer year);
 
+    public Question addSingleQuestionUsingApi(Question question);
 
+    public FeedBack addFeedback(FeedBack feedBack);
+
+    public List<FeedBack> getFeedback();
 }

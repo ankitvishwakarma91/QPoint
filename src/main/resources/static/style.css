@@ -1,0 +1,64 @@
+body {
+    background: linear-gradient(to right, #f8f9fa, #e3f2fd);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.card {
+    border-radius: 20px;
+}
+
+.card:hover {
+    transform: scale(1.01);
+    transition: 0.3s ease-in-out;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.footer-info {
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+.footer-info a {
+    color: #0d6efd;
+    text-decoration: none;
+}
+
+.footer-info a:hover {
+    text-decoration: underline;
+}
+
+.feedback-form {
+    max-width: 600px;
+    margin: auto;
+    margin-top: 80px;
+    padding: 30px;
+    background: white;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+}
+
+.feedback-form h2 {
+    font-weight: bold;
+    margin-bottom: 25px;
+    color: #0d6efd;
+}
+.error-container {
+    padding: 100px 20px;
+}
+.error-icon {
+    font-size: 80px;
+}
+
+.quote-box {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    font-style: italic;
+}
+.profile-card {
+    background: #ffffff;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}

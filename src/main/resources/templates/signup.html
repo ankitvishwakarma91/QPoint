@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Signup - QPoint</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/style.css}">
+    <style>
+        body {
+            background: #f9fbfd;
+        }
+    </style>
+</head>
+<body>
+<div class="container py-5">
+    <div class="row justify-content-center align-items-center">
+        <div class="col-md-6">
+            <div class="card shadow border-0">
+                <div class="card-body">
+                    <h3 class="text-center text-success mb-4">📝 Signup for QPoint</h3>
+                    <form th:action="@{/auth/sign-up}" method="post" th:object="${user}">
+                        <div th:if="${error}" class="alert alert-danger text-center" th:text="${error}"></div>
+                        <div class="mb-3">
+                            <label for="username" class="form-label">👤 Username</label>
+                            <input type="text" th:field="*{username}" id="username" class="form-control" required>
+                            <div class="text-danger small" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">📧 Email</label>
+                            <input type="email" th:field="*{email}" id="email" class="form-control" required>
+                            <div class="text-danger small" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+                        </div>
+                        <div class="mb-4">
+                            <label for="password" class="form-label">🔒 Password</label>
+                            <input type="password" th:field="*{password}" id="password" class="form-control" required>
+                            <div class="text-danger small" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+                        </div>
+                        <button type="submit" class="btn btn-success w-100 fw-semibold">Signup</button>
+                        <p class="text-center mt-3">Already have an account? <a th:href="@{/auth/login}">Login here</a></p>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5 d-none d-md-block">
+            <div class="quote-box text-center">
+                <h5>❝ The right question is often more important than the right answer ❞</h5>
+                <p class="text-muted mt-2">– Albert Einstein</p>
+                <hr>
+                <p class="small">Start your journey of smart preparation with QPoint.</p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

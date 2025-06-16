@@ -1,36 +1,66 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>QPoint</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <style>
-        body.dark-mode {
-            background-color: #121212;
-            color: #ffffff;
-        }
-        .card.dark-mode {
-            background-color: #1f1f1f;
-        }
-    </style>
+    <title>QPoint - Question Finder</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/static/style.css}">
 </head>
-<body class="bg-light"  id="body">
-<div class="container mt-5">
-    <div class="text-center mb-4">
-        <h1 class="fw-bold text-primary">QPoint</h1>
-        <p class="text-muted">Search and add questions easily</p>
+<body>
+<!-- ✅ Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+    <div class="container">
+        <a class="navbar-brand fw-bold text-primary" th:href="@{/}">📘 QPoint</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+                <sec:authorize access="isAnonymous()">
+                    <li class="nav-item">
+                        <a class="nav-link fw-semibold" th:href="@{/auth/login}">🔐 Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-semibold" th:href="@{/auth/signup}">📝 Signup</a>
+                    </li>
+                </sec:authorize>
+
+                <sec:authorize access="isAuthenticated()">
+                    <li class="nav-item">
+                        <a class="nav-link fw-semibold" th:href="@{/auth/profile}">👤 Profile</a>
+                    </li>
+                </sec:authorize>
+
+                <sec:authorize access="hasRole('ADMIN')">
+                    <li class="nav-item">
+                        <a class="nav-link fw-semibold text-danger" href="#">🔧 Admin Panel</a>
+                    </li>
+                </sec:authorize>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- ✅ Main Content -->
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <h1 class="fw-bold text-primary">📘 QPoint</h1>
+        <p class="text-muted fs-5">Search and Prep for your college exam questions quickly</p>
     </div>
 
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card shadow-sm border-0 mb-4">
+            <div class="card shadow border-0 mb-4">
                 <div class="card-body">
-                    <h4 class="card-title mb-3">Find Questions by Subject and Year</h4>
+                    <h4 class="card-title mb-4 text-center text-success">🔍 Find Questions by Subject & Year</h4>
                     <form th:action="@{/questions}" method="get">
                         <div class="mb-3">
-                            <label for="subject" class="form-label">Subject</label>
+                            <label for="subject" class="form-label">📚 Subject</label>
                             <select name="subject" id="subject" class="form-select" required>
                                 <option value="">Select Subject</option>
+                                <!-- Subject Options -->
                                 <option value="Em 1">Em 1</option>
                                 <option value="EM 2">EM 2</option>
                                 <option value="DM">DM</option>
@@ -42,25 +72,24 @@
                                 <option value="OOPS Python">OOPS Python</option>
                                 <option value="PPS Python">PPS Python</option>
                                 <option value="JAVA Programming">JAVA Programming</option>
-                                <option value="DSA (Java ) ">DSA (Java ) </option>
+                                <option value="DSA (Java )">DSA (Java )</option>
                                 <option value="DSA">DSA</option>
                                 <option value="DBMS">DBMS</option>
                                 <option value="EIA">EIA</option>
                                 <option value="COA">COA</option>
-                                <option value="Communication ">Communication </option>
-                                <option value="DCN">DCN </option>
-                                <option value="DAA">DAA </option>
-                                <option value="OS">OS </option>
-                                <option value="CG">CG </option>
-                                <option value="CBM">CBM </option>
-                                <option value="UI(Understanding India) ">UI(Understanding India) </option>
-                                <option value="ML(Machine Learning) ">ML(Machine Learning) </option>
-                                <!-- Add more subjects as needed -->
+                                <option value="Communication">Communication</option>
+                                <option value="DCN">DCN</option>
+                                <option value="DAA">DAA</option>
+                                <option value="OS">OS</option>
+                                <option value="CG">CG</option>
+                                <option value="CBM">CBM</option>
+                                <option value="UI(Understanding India)">UI(Understanding India)</option>
+                                <option value="ML(Machine Learning)">ML(Machine Learning)</option>
                             </select>
                         </div>
 
-                        <div class="mb-3">
-                            <label for="year" class="form-label">Year</label>
+                        <div class="mb-4">
+                            <label for="year" class="form-label">📅 Year</label>
                             <select name="year" id="year" class="form-select" required>
                                 <option value="">Select Year</option>
                                 <option value="2025">2025</option>
@@ -68,26 +97,38 @@
                                 <option value="2023">2023</option>
                                 <option value="2022">2022</option>
                                 <option value="2021">2021</option>
-                                <!-- Add more years as needed -->
                             </select>
                         </div>
 
-                        <button type="submit" class="btn btn-success w-100">Show Questions</button>
-                    </form>
-                </div>
-            </div>
-
-            <div class="card shadow-sm border-0">
-                <div class="card-body">
-                    <h4 class="card-title mb-3">Want to add a new question?</h4>
-                    <form th:action="@{/addQuestion}" method="get">
-                        <button type="submit" class="btn btn-primary w-100">Add Question</button>
+                        <button type="submit" class="btn btn-success w-100 py-2 fw-semibold">🎯 Show Questions</button>
                     </form>
                 </div>
             </div>
         </div>
+        <div class="col-md-8">
+            <div class="card shadow-sm border-0 text-center">
+                <div class="card-body">
+                    <h5 class="card-title text-primary">💬 Help Us Improve!</h5>
+                    <p class="card-text text-muted mb-3">We value your feedback. Let us know how we can make QPoint even
+                        better for you.</p>
+                    <a th:href="@{/feedback}" class="btn btn-outline-primary fw-semibold">
+                        ✍️ Fill Feedback Form
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <footer class="text-center mt-5">
+        <p class="footer-info">Made with ❤️ by <strong>Ankit Vishwakarma</strong></p>
+        <p class="footer-info">For more information or contributions, email: <a
+                href="mailto:er.ankit.vishwakarma@proton.me">er.ankit.vishwakarma@proton.me</a></p>
+        <p class="footer-info">Project available on GitHub: <a href="https://github.com/ankitvishwakarma91"
+                                                               target="_blank">@ankitvishwakarma91</a></p>
+    </footer>
 </div>
 
+<!-- Bootstrap JS (optional if you need collapse/toggler functionality) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
