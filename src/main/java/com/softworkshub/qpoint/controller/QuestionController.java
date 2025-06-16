@@ -26,8 +26,9 @@ import java.util.Random;
 import java.util.UUID;
 import java.util.random.RandomGenerator;
 
-@RestController
-@RequestMapping("/q")
+//@RestController
+//@RequestMapping("/q")
+@Controller
 public class QuestionController {
 
     private static final Logger log = LoggerFactory.getLogger(QuestionController.class);
